@@ -7,6 +7,8 @@ router.get('/profile',usersController.profile); // here 127.0.0.1:8000/users/pro
 router.get('/sign-up', usersController.signUp);
 router.get('/sign-in', usersController.signIn);
 router.post('/create', usersController.create);
+router.post('/create-session', usersController.createSession);
+router.get('/logout', usersController.logout);
 
 console.log("hi");
 module.exports= router;
