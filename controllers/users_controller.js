@@ -1,18 +1,28 @@
 const User= require('../models/user');
+const router = require('../routes');
 
 module.exports.profile = function(req,res){
-    return res.render('users',{
+    console.log(res.locals);
+    return res.render('user_profile',{
         title:'users'
     });
 };
 
 module.exports.signUp= function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     res.render('user_sign_up', {
         title: "Codial sign up"
     });
 };
 
 module.exports.signIn= function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     res.render('user_sign_in', {
         title: "Codial sign in"
     });
@@ -41,5 +51,13 @@ module.exports.create= function(req,res){
 
 //create session key and sign in
 module.exports.createSession= function(req,res){
-    //TODOD LATER
+    // console.log(req.user);
+    return res.redirect('/users/profile');
+    
 }
+
+module.exports.destroySession =function(req,res){
+    req.logout();
+    return res.redirect('/');
+}
+
