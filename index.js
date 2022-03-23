@@ -3,7 +3,8 @@ const app= express();
 const port=8000;
 const expressLayouts= require('express-ejs-layouts');
 const db= require('./config/mongoose');
-
+const flash= require('connect-flash');
+const customMware= require('./config/middleware');
 //for session cookie
 const session= require('express-session');
 const passport= require('passport');
@@ -59,7 +60,8 @@ app.use(session({
 // this should be done before the router
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash()); // this is placed after session middleware, because flash is stored in the session using locals.
+app.use(customMware.setFlash);
 app.use(passport.setAuthenticatedUser);
 // use express router
 app.use('/', require('./routes'));

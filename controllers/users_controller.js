@@ -2,15 +2,30 @@ const User= require('../models/user');
 const router = require('../routes');
 
 module.exports.profile = function(req,res){
-    console.log(res.locals);
-    return res.render('user_profile',{
-        title:'users'
-    });
+    User.findById(req.params.id, function(err,user){
+        return res.render('user_profile',{
+            title:'users',
+            profile_user: user
+        });
+    })
+    
 };
+
+module.exports.update= function(req,res){
+    if(req.user.id==req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body, function(err,user){
+            return res.redirect('back');
+        });
+
+    }else{
+        return res.status(401).send("unauthorized");
+    }
+}
+
 
 module.exports.signUp= function(req,res){
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/users/profile'+req.user.id);
     }
 
     res.render('user_sign_up', {
@@ -19,8 +34,9 @@ module.exports.signUp= function(req,res){
 };
 
 module.exports.signIn= function(req,res){
+    console.log("inside");
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/users/profile/'+ req.user.id);
     }
 
     res.render('user_sign_in', {
@@ -52,12 +68,14 @@ module.exports.create= function(req,res){
 //create session key and sign in
 module.exports.createSession= function(req,res){
     // console.log(req.user);
-    return res.redirect('/users/profile');
+    req.flash('success','Logged in successfully');
+    return res.redirect('/');
     
 }
 
 module.exports.destroySession =function(req,res){
     req.logout();
+    req.flash('success', 'logged out successfully');
     return res.redirect('/');
 }
 
