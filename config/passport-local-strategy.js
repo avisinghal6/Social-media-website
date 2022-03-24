@@ -56,6 +56,14 @@ passport.checkAuthentication = function(req,res,next){
         return next();
     }
 
+    if(req.xhr){
+        console.log("here");
+        return res.status(200).json({
+            data:{
+                redirect: "/users/sign-in"
+            },message: "redirection"
+        });
+    }
     return res.redirect('/users/sign-in');
 }
 
