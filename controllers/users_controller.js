@@ -34,7 +34,7 @@ module.exports.signUp= function(req,res){
 };
 
 module.exports.signIn= function(req,res){
-    console.log("inside");
+    // console.log("inside");
     if(req.isAuthenticated()){
         return res.redirect('/users/profile/'+ req.user.id);
     }

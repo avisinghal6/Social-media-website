@@ -25,9 +25,10 @@ class PostComments{
         let pSelf = this;
         // console.log(this);
         this.newCommentForm.submit(function(e){
+            console.log("inside");
             e.preventDefault();
             let self = this;
-
+            
             $.ajax({
                 type: 'post',
                 url: '/comments/create',

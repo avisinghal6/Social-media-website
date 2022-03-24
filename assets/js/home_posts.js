@@ -22,6 +22,10 @@
                     deletePost($(' .delete-post-button', newPost)); //' .delete-post-button', there is a space at the beginning
                     
                     // call the create comment class
+                     // get the post's id by splitting the id attribute
+                    //  console.log(newPost);
+                    let postId = newPost.prop('id').split("-")[1]
+                    console.log(postId);
                     new PostComments(data.data.post._id);
                     
                     new Noty({
@@ -57,7 +61,7 @@
                     </p>
                 
                     <div class="post-comments">
-                            <form action="/comments/create" method="POST">
+                            <form id="post-${ post._id }-comments-form" action="/comments/create" method="POST">
                                 <input type="text" name="content" placeholder="type comment here.." required>
                                 <input type="hidden" name="post" value="${post._id }" >
                                 <input type="submit" value="add comment" > 
