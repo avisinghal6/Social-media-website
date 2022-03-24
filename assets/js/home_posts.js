@@ -17,9 +17,13 @@
                     }
                     
                     let newPost=newPostDom(data.data.post);
-                    console.log(newPost);
+                    // console.log(newPost);
                     $('#posts-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost)); //' .delete-post-button', there is a space at the beginning
+                    
+                    // call the create comment class
+                    new PostComments(data.data.post._id);
+                    
                     new Noty({
                         theme: 'relax',
                         text: "Post published!",
@@ -28,6 +32,8 @@
                         timeout: 1500
                         
                     }).show();
+
+
                 },
                 error: function(error){
                     console.log(error.responseText);
@@ -88,7 +94,7 @@
 
     // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
     let convertPostsToAjax = function(){
-        console.log($('#posts-list-container>ul>li'));
+        // console.log($('#posts-list-container>ul>li'));
         $('#posts-list-container>ul>li').each(function(){
             // console.log(this);
             // console.log($(this));
@@ -97,8 +103,8 @@
             deletePost(deleteButton);
 
             // get the post's id by splitting the id attribute
-            // let postId = self.prop('id').split("-")[1]
-            // new PostComments(postId);
+            let postId = self.prop('id').split("-")[1]
+            new PostComments(postId);
         });
     }
 
