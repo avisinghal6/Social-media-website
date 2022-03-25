@@ -23,7 +23,8 @@ app.use(sassMiddleware({
     
 app.use(express.urlencoded()); // used to extract the data from the body of the request
 app.use(cookieParser());
-
+//make the uploads path available to the browser, since it is static file, we dont need to creater routes.
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 //using layouts, it needs to placed before the route controller so that the ejs pages can use the layout
 app.use(expressLayouts); 

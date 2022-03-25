@@ -25,7 +25,7 @@ class PostComments{
         let pSelf = this;
         // console.log(this);
         this.newCommentForm.submit(function(e){
-            console.log("inside");
+            
             e.preventDefault();
             let self = this;
             
@@ -37,7 +37,7 @@ class PostComments{
                     let newComment = pSelf.newCommentDom(data.data.comment);
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
-
+                    
                     new Noty({
                         theme: 'relax',
                         text: "Comment published!",
@@ -102,4 +102,12 @@ class PostComments{
 
         });
     }
+
+    trial(){
+        console.log("inside trial");
+    }
+
+    
+
+    
 }
