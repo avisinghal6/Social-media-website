@@ -9,6 +9,10 @@ const customMware= require('./config/middleware');
 const session= require('express-session');
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
+const passportJWT=require('./config/passport-jwt-strategy'); //need to import these stategies
+
+
+
 const MongoStore = require('connect-mongo');
 const cookieParser= require('cookie-parser');
 const sassMiddleware= require('node-sass-middleware');
@@ -16,7 +20,7 @@ const sassMiddleware= require('node-sass-middleware');
 app.use(sassMiddleware({
     src:'./assets/scss', //usng "." makes it work
     dest:'./assets/css',
-    debug:true,
+    debug:false,
     outputStyle: 'extended',
     prefix:'/css'
 }));

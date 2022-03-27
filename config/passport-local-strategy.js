@@ -21,7 +21,7 @@ passport.use(new LocalStrategy({
                 req.flash('error', 'invalid credentials');
                 return done(null,false); //false is because authentication has not been done
             }
-            // console.log("inside use");
+            console.log("inside use");
             return done(null,user);
         });
     }
