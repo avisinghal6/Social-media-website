@@ -26,7 +26,7 @@ module.exports.index= async function(req,res){
 module.exports.destroy= async function(req,res){
     try{
         let post=await Post.findById(req.params.id);
-        console.log(req);
+        // console.log(req.user);
         if(post.user== req.user.id){  //req.params.id, when using '.id' mongoose converts the object id to string
             post.remove();
 
