@@ -15,6 +15,12 @@ const postSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId, // the objectId in robot3T
             ref:'Comment'
         }
+    ],
+    likes: [
+        {
+            type:mongoose.Schema.ObjectId,
+            ref: 'Like'
+        }
     ]
 },
     {     

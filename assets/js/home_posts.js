@@ -27,6 +27,8 @@
                     let postId = newPost.prop('id').split("-")[1]
                     console.log(postId);
                     new PostComments(data.data.post._id);
+
+                    new ToggleLike($(' .toggle-like-button', newPost));
                     
                     new Noty({
                         theme: 'relax',
@@ -59,6 +61,13 @@
                         <br>
                         ${ post.user.name }
                     </p>
+
+                    <br>
+                    <small>
+                        <a class= "toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                            0 Likes
+    ]                   </a>
+                    </small>
                 
                     <div class="post-comments">
                             <form id="post-${ post._id }-comments-form" action="/comments/create" method="POST">

@@ -3,6 +3,7 @@ const Post= require('../models/post');
 const commentsMailer= require('../Mailers/comments_mailer');
 const queue= require('../config/kue');
 const commentEmailWorker= require('../workers/comment_email_worker');
+const Like = require('../models/like');
 module.exports.create= async function(req,res){
     try{
         let post=await Post.findById(req.body.post);
@@ -70,6 +71,8 @@ module.exports.destroy = async function(req,res){
         if(comment.user== req.user.id){  //req.params.id, when using '.id' mongoose converts the object id to string
 
             let postId= comment.post;
+
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
             comment.remove();
             let post=await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id}});
 
