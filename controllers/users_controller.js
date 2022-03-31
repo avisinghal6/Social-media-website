@@ -1,6 +1,9 @@
 const User= require('../models/user');
+const ForgotPassword = require('../models/forgot_password');
+const forgotPasswordMailer= require('../Mailers/forgot_password_mailer');
 const fs= require('fs'); //for performing file operations
 const path= require('path');
+const crypto= require('crypto');
 
 module.exports.profile = function(req,res){
     User.findById(req.params.id, function(err,user){
@@ -122,3 +125,79 @@ module.exports.destroySession =function(req,res){
     return res.redirect('/');
 }
 
+module.exports.forgotPassword = function(req,res){
+    return res.render('forgotPassword', {
+        title: "Codial forgot password"
+    });
+}
+
+module.exports.forgotPasswordToken = async function(req,res){
+    try{
+        let user = await User.findOne({email: req.body.email});
+       
+        if(user){
+
+            
+            let forgotPasswordToken= await ForgotPassword.create({
+                user: user._id,
+                accessToken: crypto.randomBytes(20).toString('hex'),
+                is_Valid: "True"
+            });
+
+            forgotPasswordToken = await forgotPasswordToken.populate('user', 'name email');
+                forgotPasswordMailer.newPassword(forgotPasswordToken);
+
+                //TODO redirection needs to be changed
+                return res.redirect('/users/sign-in');
+
+
+        }else{
+            return res.redirect('back');
+        }
+    }catch(err){
+        console.log(err)
+    }
+
+}
+
+module.exports.resetPassword= async function(req,res){
+    try{
+        let forgotPasswordToken= await ForgotPassword.findOne({accessToken: req.params.token});    
+        // console.log(forgotPasswordToken.is_Valid=="True");
+        if(forgotPasswordToken.is_Valid=="True"){
+           
+            await forgotPasswordToken.updateOne({is_Valid: "false"});
+           
+            return res.render('reset_password',{
+                title: "Codial Reset password",
+                token: forgotPasswordToken.accessToken
+            });
+        }else{
+            return res.send("Token expired");
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+    
+}
+
+module.exports.checkPassword= async function(req,res){
+    try{
+        if(req.body.password== req.body.confirm_password){
+            let token= req.body.token;
+            let forgotPasswordToken= await ForgotPassword.findOne({accessToken: token});
+            let user = await User.findById({_id: forgotPasswordToken.user});
+
+            await user.updateOne({password: req.body.password});
+            return res.redirect('/users/sign-in');
+
+
+        }else{
+            return res.redirect('back');
+        }
+    }catch(err){
+        console.log(err);
+    }
+    
+}

@@ -16,7 +16,7 @@ module.exports.home = async function(req,res){
             });
 
             let users= await User.find({});
-
+            // console.log(req.session);
             return res.render('home',{
                                 title:'Codial | home',
                                 posts: posts,

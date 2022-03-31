@@ -8,6 +8,12 @@ router.get('/sign-up', usersController.signUp);
 router.get('/sign-in', usersController.signIn);
 router.post('/create', usersController.create);
 router.post('/update/:id', passport.checkAuthentication, usersController.update);
+router.get('/forgot-password', usersController.forgotPassword);
+
+
+router.post('/create-forgot-password-token', usersController.forgotPasswordToken);
+router.get('/reset-password/:token', usersController.resetPassword);
+router.post('/check-password', usersController.checkPassword);
 
 //use passport as a middle to authenticate
 router.post('/create-session', passport.authenticate(
