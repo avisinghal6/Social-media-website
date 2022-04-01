@@ -19,7 +19,7 @@ module.exports.create= async function(req,res){
             post.save(); //save needs to be called after updating
             // Similar for comments to fetch the user's id!
             comment = await comment.populate('user', 'name email');
-
+            
             // commentsMailer.newComment(comment);
             let job =queue.create('emails',comment).save(function(err){ //create function creates new job/queue, 'save' function is for saving to Redis
                 if(err){
@@ -31,7 +31,6 @@ module.exports.create= async function(req,res){
 
             if (req.xhr){
                 
-    
                 return res.status(200).json({
                     data: {
                         comment: comment

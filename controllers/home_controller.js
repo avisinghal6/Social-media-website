@@ -12,10 +12,13 @@ module.exports.home = async function(req,res){
                 path: 'comments',
                 populate: {
                     path: 'user'
-                },
-                populate:{
+                }  
+            })
+            .populate({ //had to write separately because in same 'populate' it was populating only the last specified field
+                path: 'comments',
+                populate: {
                     path: 'likes'
-                }
+                }  
             }).populate('likes');
 
             let users= await User.find({});
@@ -26,7 +29,7 @@ module.exports.home = async function(req,res){
                                 all_users: users
                             });
 
-        }catch{
+        }catch(err){
             console.log("error",err);
         }
        

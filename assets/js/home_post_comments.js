@@ -110,10 +110,7 @@ class PostComments{
         });
     }
 
-    trial(){
-        console.log("inside trial");
-    }
-
+    
     
 
     

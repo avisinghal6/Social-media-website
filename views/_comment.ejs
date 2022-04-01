@@ -1,10 +1,10 @@
 <li id="comment-<%= comment._id %>"> 
     <p>
-        <% if(locals.user && locals.user.id ==comment.user.id){ %>
+        <% if(locals.user && locals.user.id ==comment.user._id){ %>
             <small>
-                <a class="delete-comment-button" href="/comments/destroy/<%=comment.id %>"> X </a>
+                <a class="delete-comment-button" href="/comments/destroy/<%=comment._id %>"> X </a>
             </small>
-            <% } %>
+        <% } %>
 
 
         <%= comment.content %>
@@ -12,7 +12,8 @@
         <small>
             <%= comment.user.name %>
         </small>
-
+    
+        
         <small>
         <!-- dsiplay the likes of the comments, if user is logged in, then show the link to toggle likes, else just show count -->
         
