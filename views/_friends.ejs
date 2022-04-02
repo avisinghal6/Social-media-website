@@ -1,0 +1,9 @@
+<li id="friend-<%=u._id %>-<%= friend._id %>">
+    
+    <% if(friend.to_user.id == u._id){ %>
+        <%= friend.from_user.name %>
+    <% }else{ %>
+        <%= friend.to_user.name %>
+    <% } %>
+</li>
+

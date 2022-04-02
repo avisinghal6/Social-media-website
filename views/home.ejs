@@ -11,6 +11,7 @@
 
         <div id="posts-list-container">
             <ul>
+                
                 <% for(post of posts) { %> 
                     <%- include('_post') -%>
                 <% } %>
@@ -19,12 +20,26 @@
 
     </section>
     <div id="users-section">
-        <section id="user-friends">
-            hello
-        </section>
+        <% if(locals.user){ %>
+            <section id="user-friends">
+                <h4> Friends </h4>
+                
+                <% for (u of all_users){ %>
+                    
+                    <% if(locals.user.id == u._id){ %>
+                        
+                        <% for(friend of u.friendships){ %>
+                            <%- include('_friends') -%>
+                        <% } %>
+                        <% break %>
+                    <% } %> 
+                
+                <% } %>
+            </section>
+            <% } %>
 
         <section id="all-users">
-            <h4> Friends </h4>
+            <h4> Users </h4>
             <% for (u of all_users){ %>
                 <p>
                     <a href="/users/profile/<%= u.id %>"> <%= u.name %></a>
