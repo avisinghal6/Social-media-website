@@ -18,15 +18,21 @@
         </div>
 
     </section>
+    <div id="users-section">
+        <section id="user-friends">
+            hello
+        </section>
+
+        <section id="all-users">
+            <h4> Friends </h4>
+            <% for (u of all_users){ %>
+                <p>
+                    <a href="/users/profile/<%= u.id %>"> <%= u.name %></a>
+                </p>
+            <% } %>
+        </section>
+    </div>
     
-    <section id="user-friends">
-        <h4> Friends </h4>
-        <% for (u of all_users){ %>
-            <p>
-                <a href="/users/profile/<%= u.id %>"> <%= u.name %></a>
-            </p>
-        <% } %>
-    </section>
 </div>
 
 <!-- importing this script for creating the comments -->

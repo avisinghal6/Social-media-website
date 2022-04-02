@@ -5,13 +5,22 @@ const fs= require('fs'); //for performing file operations
 const path= require('path');
 const crypto= require('crypto');
 
-module.exports.profile = function(req,res){
-    User.findById(req.params.id, function(err,user){
-        return res.render('user_profile',{
-            title:'users',
-            profile_user: user
-        });
-    })
+module.exports.profile = async function(req,res){
+    try{
+        let user= await User.findById(req.params.id).populate('friendships');
+        if(user){
+            return res.render('user_profile',{
+                title:'users',
+                profile_user: user
+            });
+        }else{
+            return res.redirect('/users/sign-in')
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+    
     
 };
 

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/user_profile.css">
 
-<img src="<%= user.avatar %>" alt="<%=user.name %>">
+<img src="<%= profile_user.avatar %>" alt="<%=profile_user.name %>">
 
 <% if(locals.user.id== profile_user.id){ %>
     <!-- if user matches then show form -->
@@ -13,4 +13,22 @@
 <% } else{ %>
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
+
+    <!-- check if this user is a friend of the logged in user or not -->
+    <% let isFriend= false; %>
+    <% for(friend of profile_user.friendships) { %>
+        <% if(friend.to_user==locals.user.id || friend.from_user==locals.user.id){ %>
+            <% isFriend= true; %>
+            <a id="friend-remove-button" href="/friends/remove-friend/<%= profile_user.id %>"> Remove Friend</a>
+            <% break; %>
+        <% } %>
+    <% } %> 
+
+    <% if(isFriend==false){ %>
+        <a id="friend-add-button" href="/friends/add-friend/<%= profile_user.id %>"> Add Friend</a>
+    <% } %> 
+    
     <% } %>
+
+
+    <script src="../../js/friends.js"></script>
