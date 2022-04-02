@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/css/home.css" >
+<link rel="stylesheet" href="/css/chat_box.css" >
+
 
 <div id="home-container">
 
@@ -46,6 +48,8 @@
                 </p>
             <% } %>
         </section>
+
+        <%- include('_chat_box') -%>
     </div>
     
 </div>
@@ -62,3 +66,12 @@
         let toggleLike= new ToggleLike(self);
     });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+<script src="/js/chat_engine.js "></script>
+
+<% if(locals.user){ %>
+<script> 
+    new chatEngine('user-chat-box', '<%= locals.user.email %>')
+</script>
+<% } %>
