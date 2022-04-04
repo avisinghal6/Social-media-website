@@ -3,14 +3,13 @@ class chatEngine{
         this.chatBox = $(`#${chatBoxId}`);
         this.userEmail = userEmail;
 
-        this.socket = io.connect('http://localhost:5000');
-
+        this.socket = io.connect('http://localhost:5000'); //'io' is a global varibale provided because we included socket.io CDN
+        
         if (this.userEmail){
             this.connectionHandler();
         }
 
     }
-
 
     connectionHandler(){
         let self = this;

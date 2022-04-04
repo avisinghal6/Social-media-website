@@ -1,4 +1,5 @@
 const express= require('express');
+const env= require('./config/environment')
 const app= express();
 const port=8000;
 const expressLayouts= require('express-ejs-layouts');
@@ -6,7 +7,7 @@ const db= require('./config/mongoose');
 const flash= require('connect-flash');
 const customMware= require('./config/middleware');
 //setup chat server to be used with socket.io
-const chatServer = require('http').Server(app);
+const chatServer = require('http').Server(app); //creates an http server for which 'app' is the function handler.
 const chatSockets= require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
@@ -22,10 +23,11 @@ const passportGoogle=require('./config/passport-google-oauth2-strategy'); //need
 const MongoStore = require('connect-mongo');
 const cookieParser= require('cookie-parser');
 const sassMiddleware= require('node-sass-middleware');
-
+const path = require('path');
+const tpath= require('path');
 app.use(sassMiddleware({
-    src:'./assets/scss', //usng "." makes it work
-    dest:'./assets/css',
+    src: path.join(__dirname, env.asset_path,'scss'), //usng "." makes it work
+    dest: path.join(__dirname, env.asset_path, 'css'),
     debug:false,
     outputStyle: 'extended',
     prefix:'/css'
@@ -45,7 +47,7 @@ app.set('views','./views');
 // for extracting the scripts and css files from the variable content and placing appropriately in layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -55,7 +57,7 @@ app.set('views', './views');
 app.use(session({
     name: 'codial', //name of the application, this is the cookie name
     //todo change the secret before deployment in production mode
-    secret: 'blahsomething', //this is the key which is used for coding/decoding the cookie
+    secret: env.session_cookie_key, //this is the key which is used for coding/decoding the cookie
     saveUninitialized: false,
     resave: false,
     cookie:{
@@ -79,7 +81,7 @@ app.use('/', require('./routes'));
 
 
 
-app.listen(port, function(err){
+app.listen(port, function(err){ //creates a http server, 'express' handles the creation part
     if(err){
         console.log(`Error : ${err}`);
         return;

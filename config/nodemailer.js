@@ -1,19 +1,10 @@
 const nodemailer= require('nodemailer');
 const ejs= require('ejs');
 const path= require('path');
-
+const env = require('./environment');
 
 // this part defines who is going to send the emails
-let transporter= nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smptp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: '',
-        pass: ''//fill in the password for the username but dont push to github
-    }
-});
+let transporter= nodemailer.createTransport(env.smtp);
 
 let renderTemplate = (data,relativePath) => {
     let mailHTML;

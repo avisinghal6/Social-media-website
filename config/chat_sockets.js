@@ -1,7 +1,7 @@
 
 module.exports.chatSockets= function(socketServer){
     let io= require('socket.io')(socketServer);
-
+    
     io.sockets.on('connection',function(socket){
         console.log('new connection received', socket.id);
 
@@ -12,7 +12,7 @@ module.exports.chatSockets= function(socketServer){
         socket.on('join_room', function(data){
             console.log("joining reqest rec.", data);
 
-            socket.join(data.chatroom); //connect the use to the chatroom
+            socket.join(data.chatroom); //connect the user to the chatroom
             io.in(data.chatroom).emit('user_joined',data);
         });
 
