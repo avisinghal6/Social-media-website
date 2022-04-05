@@ -15,7 +15,7 @@ const development={
     name:'development',
     asset_path: './assets',
     session_cookie_key: 'blahsomething',
-    db : 'codeial_development',
+    db : 'codial_development',
     smtp: {
         service: 'gmail',
         host: 'smptp.gmail.com',
@@ -40,7 +40,7 @@ const development={
 }
 
 const production ={
-    name:'development',
+    name:'production',
     asset_path: process.env.CODEIAL_ASSET_PATH,
     session_cookie_key: process.env.CODEIAL_SESSION_COOKIE_KEY,
     db : process.env.CODEIAL_DB,
@@ -66,7 +66,8 @@ const production ={
     }
 }
 
-module.exports= eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? 'development' : eval(process.env.CODEIAL_ENVIRONMENT);
+module.exports= development;
+// eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);
 
 //BELOW IF FOR MAC
 // FOR PRODUCTION, SAVE THE SECRETS/ CONFIDENTIAL INFO IN THE ./bash_profile.
