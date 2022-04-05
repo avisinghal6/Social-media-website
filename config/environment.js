@@ -1,4 +1,15 @@
+const fs= require('fs');
+const rfs= require('rotating-file-stream');
 
+const path= require('path');
+
+const logDirectory= path.join(__dirname, '../production_log');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+const accessLogStream= rfs.createStream('access.log', {
+    interval: '1d',
+    path: logDirectory
+});
 
 const development={
     name:'development',
@@ -18,7 +29,13 @@ const development={
     google_client_id: '881015180174-8vjhom0s4ndegehgk58ad39u05f4bghb.apps.googleusercontent.com',
     google_client_secret: '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',
     google_call_back_url: 'http://localhost:8000/users/auth/google/callback',
-    jwt_secret: 'codeial'
+    jwt_secret: 'codeial',
+    morgan: {
+        mode: 'dev',
+        options: {
+            stream: accessLogStream
+        }
+    }
 
 }
 
@@ -40,10 +57,16 @@ const production ={
     google_client_id: process.env.CODEIAL_GOOGLE_CLIENT_ID,
     google_client_secret: process.env.CODEIAL_GOOGLE_CLIENT_SECRET,
     google_call_back_url: process.env.CODEIAL_GOOGLE_CALLBACK_URL,
-    jwt_secret: process.env.CODEIAL_JWT_SECRET
+    jwt_secret: process.env.CODEIAL_JWT_SECRET,
+    morgan: {
+        mode: 'combined',
+        options: {
+            stream: accessLogStream
+        }
+    }
 }
 
-module.exports= eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? 'developement' : eval(process.env.CODEIAL_ENVIRONMENT);
+module.exports= eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? 'development' : eval(process.env.CODEIAL_ENVIRONMENT);
 
 //BELOW IF FOR MAC
 // FOR PRODUCTION, SAVE THE SECRETS/ CONFIDENTIAL INFO IN THE ./bash_profile.

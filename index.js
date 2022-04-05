@@ -1,5 +1,6 @@
 const express= require('express');
-const env= require('./config/environment')
+const env= require('./config/environment');
+const logger= require('morgan');
 const app= express();
 const port=8000;
 const expressLayouts= require('express-ejs-layouts');
@@ -25,18 +26,25 @@ const cookieParser= require('cookie-parser');
 const sassMiddleware= require('node-sass-middleware');
 const path = require('path');
 const tpath= require('path');
-app.use(sassMiddleware({
-    src: path.join(__dirname, env.asset_path,'scss'), //usng "." makes it work
-    dest: path.join(__dirname, env.asset_path, 'css'),
-    debug:false,
-    outputStyle: 'extended',
-    prefix:'/css'
-}));
+
+if(env.name=='development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path,'scss'), //usng "." makes it work
+        dest: path.join(__dirname, env.asset_path, 'css'),
+        debug:false,
+        outputStyle: 'extended',
+        prefix:'/css'
+    }));
+}
+
     
 app.use(express.urlencoded()); // used to extract the data from the body of the request
 app.use(cookieParser());
 //make the uploads path available to the browser, since it is static file, we dont need to creater routes.
 app.use('/uploads',express.static(__dirname+'/uploads'));
+
+app.use(logger(env.morgan.mode, env.morgan.options))
+
 
 //using layouts, it needs to placed before the route controller so that the ejs pages can use the layout
 app.use(expressLayouts); 
