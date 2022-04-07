@@ -1,6 +1,6 @@
 const User= require('../models/user');
 const ForgotPassword = require('../models/forgot_password');
-const forgotPasswordMailer= require('../Mailers/forgot_password_mailer');
+const forgotPasswordMailer= require('../mailers/forgot_password_mailer');
 const fs= require('fs'); //for performing file operations
 const path= require('path');
 const crypto= require('crypto');
