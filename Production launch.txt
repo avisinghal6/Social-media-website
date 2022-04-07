@@ -1,0 +1,18 @@
+1) Used AWS EC2 service for production, used the free tier. Use Ubuntu 18.04 server
+2) Selected t2.micro machine (basic level machine), created a key pair.
+3) Save the downloaded .pem file, it will be used for accessing the server.
+4) use terminal from vs code for accessing the remote machine.
+4) give permission to access the remote machine using the command 'chmod 600 /download/<>.pem file path' for mac.
+For mac to log in use 'ssh -i ~<.pem file path> ubuntu@ipaddress
+For windows use the link :https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html
+5) install nodejs, redex sever, nginx, pm2(like nodemon)
+6) first install nvm(use github link and follow it), after running command there will be three commands, copy and paste them in the putty terminal.
+7) nvm install <nodejs version>
+8) install mongodb (refer documentation, community server installtion on server)https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+9) for create list, use the 18.04 version
+10) start mongodb, it will run in background, use mongod -v to check if its running
+11) use ' sudo -apt-get install redis-server', redis-cli ping
+12) 'sudo apt-get install nginx'. To check status use' sudo service nginx status'. To stop 'sudo service nginx stop'
+13) 'npm install npm2 -g ' search on google for install pm2 on ubuntu
+13) install gulp cli, 'npm install gulp-cli -g'
+
