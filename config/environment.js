@@ -50,8 +50,8 @@ const production ={
         port: 587,
         secure: false,
         auth: {
-            user: process.env.GMAIL_USERNAME,
-            pass: process.env.GMAIL_PASSWORD//fill in the password for the username but dont push to github
+            user: process.env.CODEIAL_GMAIL_USERNAME,
+            pass: process.env.CODEIAL_GMAIL_PASSWORD//fill in the password for the username but dont push to github
         }
     },
     google_client_id: process.env.CODEIAL_GOOGLE_CLIENT_ID,

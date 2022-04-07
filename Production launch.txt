@@ -15,4 +15,4 @@ For windows use the link :https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/pu
 12) 'sudo apt-get install nginx'. To check status use' sudo service nginx status'. To stop 'sudo service nginx stop'
 13) 'npm install npm2 -g ' search on google for install pm2 on ubuntu
 13) install gulp cli, 'npm install gulp-cli -g'
-
+14) add bash profile, vi ~/.bash_profile, then source ~/.bash_profile
