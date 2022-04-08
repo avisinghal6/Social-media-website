@@ -16,3 +16,7 @@ For windows use the link :https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/pu
 13) 'npm install npm2 -g ' search on google for install pm2 on ubuntu
 13) install gulp cli, 'npm install gulp-cli -g'
 14) add bash profile, vi ~/.bash_profile, then source ~/.bash_profile
+15) edit the launch wizard rules of the instance, add the HTTP, CUSTON TCP
+16) to start PM2, use 'pm2 start index.js'
+to view pm2 list, 'pm2 list'
+to view pm2 logs, 'pm2 logs'

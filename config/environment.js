@@ -35,7 +35,8 @@ const development={
         options: {
             stream: accessLogStream
         }
-    }
+    },
+    socket_url: 'http://localhost:5000'
 
 }
 
@@ -63,11 +64,11 @@ const production ={
         options: {
             stream: accessLogStream
         }
-    }
+    },
+    socket_url: process.env.CODEIAL_SOCKET_PATH
 }
 
-module.exports= development;
-// eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);
+module.exports= eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);
 
 //BELOW IF FOR MAC
 // FOR PRODUCTION, SAVE THE SECRETS/ CONFIDENTIAL INFO IN THE ./bash_profile.

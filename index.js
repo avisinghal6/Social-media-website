@@ -39,7 +39,7 @@ if(env.name=='development'){
 }
 
     
-app.use(express.urlencoded()); // used to extract the data from the body of the request
+app.use(express.urlencoded({extended: false})); // used to extract the data from the body of the request
 app.use(cookieParser());
 //make the uploads path available to the browser, since it is static file, we dont need to creater routes.
 app.use('/uploads',express.static(__dirname+'/uploads'));
