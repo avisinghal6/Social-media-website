@@ -4,7 +4,7 @@ class chatEngine{
         this.chatBox = $(`#${chatBoxId}`);
         this.userEmail = userEmail;
 
-        this.socket = io.connect('http://http://52.42.195.47:5000'); //'io' is a global varibale provided because we included socket.io CDN
+        this.socket = io.connect('http://52.42.195.47:5000'); //'io' is a global varibale provided because we included socket.io CDN
         
         if (this.userEmail){
             this.connectionHandler();
