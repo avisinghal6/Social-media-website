@@ -20,3 +20,7 @@ For windows use the link :https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/pu
 16) to start PM2, use 'pm2 start index.js'
 to view pm2 list, 'pm2 list'
 to view pm2 logs, 'pm2 logs'
+17) nginx code is present inside /etc/nginx
+delete the contents from 'sudo vi site-enabled/default'. Then search for nginx setup and copy that setup.
+site-enabled and site-available are mirrored, so any changes in one will mirror to the other.
+then 'sudo service nginx start', check status also
