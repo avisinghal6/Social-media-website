@@ -1,12 +1,12 @@
 const express = require("express");
-const env = require("./config/environment");
-const logger = require("morgan");
+const env = require("./config/environment"); // Getting environment information
+const logger = require("morgan"); // required for logging
 const app = express();
 require("./config/view-helpers")(app);
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
-const flash = require("connect-flash");
+const flash = require("connect-flash"); // For flash messages
 const customMware = require("./config/middleware");
 //setup chat server to be used with socket.io
 const chatServer = require("http").Server(app); //creates an http server for which 'app' is the function handler.
@@ -16,11 +16,18 @@ console.log("chat server is listening on port 2000");
 
 //for session cookie
 const session = require("express-session");
+
 const passport = require("passport");
+// Reason for importing the following modules: passport is imported once and its reference is saved in "passport object above"
+// passport is imported in below files as well and these files add certain functions to the "passport object",
+// if we dont import the below files, then those functions will not be accessible.
+// main reason for the functions being accesible is that import is actually done only ONCE, the other times the reference of the 
+//same object is returned. Thats why all the below files refer to same object (mentioned above) and update the same object.
 const passportLocal = require("./config/passport-local-strategy");
 const passportJWT = require("./config/passport-jwt-strategy"); //need to import these stategies
 const passportGoogle = require("./config/passport-google-oauth2-strategy"); //need to import these stategies
 
+console.log(passport)
 const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 const sassMiddleware = require("node-sass-middleware");

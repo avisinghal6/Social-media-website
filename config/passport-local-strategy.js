@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({
 
 // serializing the user to decide which key is to be kept in the cookies
 passport.serializeUser(function(user,done){
-    // console.log("serialiser");
+    console.log("serialiser");
     done(null, user.id); // we just want to store the encrypted "user id" in the cookie
 });
 
@@ -44,7 +44,7 @@ passport.deserializeUser(function(id,done){
 
         }
 
-        // console.log("deserialiser");
+        console.log("deserialiser");
         return done(null, user);
     });
 });
@@ -68,11 +68,14 @@ passport.checkAuthentication = function(req,res,next){
 }
 
 passport.setAuthenticatedUser= function(req,res,next){
+
     if(req.isAuthenticated()){
         
         res.locals.user= req.user; //send the "user" to locals for views, so we can directly use "user" without explicitly passing it in the controller as a parameter
-        // console.log(res.locals);
+        // console.log(res.locals.user);
     }
+
+   
     next();
-}
+}   
 module.exports= passport;

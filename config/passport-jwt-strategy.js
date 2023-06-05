@@ -1,5 +1,4 @@
 const passport= require('passport');
-
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT= require('passport-jwt').ExtractJwt;//it will help extract the token from the header
 const User= require('../models/user');
