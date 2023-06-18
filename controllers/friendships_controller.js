@@ -21,12 +21,13 @@ module.exports.addFriend= async function(req,res){
         from_userObject.friendships.push(newfriend._id);
         from_userObject.save();
 
-        return res.json(200,{
-            message:"friend added successfully",
-            data: {
-                toUser: toUser
-            }
-        })
+        return res.redirect('/');
+        // return res.json(200,{
+        //     message:"friend added successfully",
+        //     data: {
+        //         toUser: toUser
+        //     }
+        // })
         
 
     }catch(err){
@@ -57,12 +58,13 @@ module.exports.removeFriend= async function(req,res){
         await User.findByIdAndUpdate(fromUser, { $pull: { friendships: deleteFriendId}});
         await User.findByIdAndUpdate(toUser, { $pull: { friendships: deleteFriendId}});
         console.log("deleting")
-        return res.json(200,{
-            message:"friend removed successfully",
-            data:{
-                toUser: toUser
-            }
-        })
+        return res.redirect('/');
+        // return res.json(200,{
+        //     message:"friend removed successfully",
+        //     data:{
+        //         toUser: toUser
+        //     }
+        // })
         
 
     }catch(err){
