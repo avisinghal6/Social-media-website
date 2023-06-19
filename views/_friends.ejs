@@ -2,8 +2,14 @@
     
     <% if(friend.to_user.id == u._id){ %>
         <%= friend.from_user.name %>
+        <button id="friend-<%=friend._id %>"> Chat</button>
     <% }else{ %>
         <%= friend.to_user.name %>
+        
+        <button id="friend-<%=friend._id %>" > Chat</button>
     <% } %>
 </li>
 
+<script>
+    addListener('<%=friend._id %>','<%=u.email %>');
+</script>
