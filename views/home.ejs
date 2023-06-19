@@ -1,7 +1,23 @@
 <link rel="stylesheet" href="<%= assetPath('css/home.css') %>" >
 <link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>" >
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %> "></script>
+<script src="<%= assetPath('js/chat_box.js') %> "></script>
+<script>
+    let addListener=function(friendship_id, user_name){
+        var name='#friend-'+friendship_id;
+        let button= $(name);
+        // console.log(button);
+        button.click(function(e){
+            // console.log(name);
+            $('#chat-window').append(chat_box(friendship_id));
+            new chatEngine('user-chat-box', user_name,friendship_id );
+            // console.log($(`#chat-${friendship_id} #send-message`))
+            $(name).prop('disabled', true);
+        });
 
-
+    }
+</script>
 <div id="home-container">
 
     <section id="feed-posts">
@@ -49,14 +65,17 @@
             <% } %>
         </section>
 
-        <%- include('_chat_box') -%>
+        <section id="chat-window">
+
+        </section>
+        
     </div>
     
 </div>
 
 <!-- importing this script for creating the comments -->
 <script src="<%= assetPath('js/home_post_comments.js') %>" ></script>
-<script src="<%= assetPath('js/home_posts.js') %>") %></script>></script>
+<script src="<%= assetPath('js/home_posts.js') %>") %></script>>
 
 <!-- imported the script file for toggle likes, also run it for the already present posts and comments on the page -->
 <script src="<%= assetPath('js/toggle_likes.js') %>"></script>
@@ -67,11 +86,4 @@
     });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
-<script src="<%= assetPath('js/chat_engine.js') %> "></script>
 
-<% if(locals.user){ %>
-<script> 
-    new chatEngine('user-chat-box', '<%= locals.user.email %>')
-</script>
-<% } %>

@@ -1,8 +1,8 @@
 class chatEngine {
-  constructor(chatBoxId, userEmail) {
+  constructor(chatBoxId, userEmail, chatRoomId) {
     this.chatBox = $(`#${chatBoxId}`);
     this.userEmail = userEmail;
-
+    this.chatRoomID=chatRoomId;
     this.socket = io.connect("http://localhost:2000", {
       transports: ["websocket"],
     }); //'io' is a global varibale provided because we included socket.io CDN
@@ -17,10 +17,10 @@ class chatEngine {
 
     this.socket.on("connect", function () {
       console.log("connection established using sockets...!");
-
+      // console.log()
       self.socket.emit("join_room", {
         user_email: self.userEmail,
-        chatroom: "codeial",
+        chatroom: self.chatRoomID,
       });
 
       self.socket.on("user_joined", function (data) {
@@ -28,15 +28,15 @@ class chatEngine {
       });
     });
 
+    
     // CHANGE :: send a message on clicking the send message button
-    $("#send-message").click(function () {
-      let msg = $("#chat-message-input").val();
-
+    $(`#chat-${self.chatRoomID} #send-message`).click(function () {
+      let msg = $(`#chat-${self.chatRoomID} #chat-message-input`).val();
       if (msg != "") {
         self.socket.emit("send_message", {
           message: msg,
           user_email: self.userEmail,
-          chatroom: "codeial",
+          chatroom: self.chatRoomID,
         });
       }
     });
@@ -65,8 +65,7 @@ class chatEngine {
       );
 
       newMessage.addClass(messageType);
-
-      $("#chat-messages-list").append(newMessage);
+      $(`#chat-${self.chatRoomID} #chat-messages-list`).append(newMessage);
     });
   }
 }
